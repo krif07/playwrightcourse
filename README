@@ -1,0 +1,9 @@
+npx playwright test
+npx playwright show-report
+npx playwright test --project=chromium
+npx playwright test --project=chromium --headed
+npx playwright test example.spec.ts --project=chromium --headed
+npx playwright test -g "mercadolibre" --project=chromium --headed
+npx playwright test --ui
+npx playwright test --project=chromium --trace on
+npx playwright test --project=chromium --debug
