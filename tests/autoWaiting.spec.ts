@@ -1,6 +1,8 @@
 import {test, expect} from '@playwright/test';
 
-test.beforeEach(async ({page}) => {
+test.beforeEach(async ({page}, testInfo) => {
+    // increse the time out for every test in this file in 2 seconds
+    testInfo.setTimeout(testInfo.timeout + 2000);
     await page.goto('http://www.uitestingplayground.com/ajax');
 });
 
@@ -43,6 +45,8 @@ test('alternative waits - response', async({page}) => {
 });
 
 test('alternative waits - all network call to be completed', async({page}) => {
+    // Give 3 times more time to the test to be finished
+    test.slow();
     const buttonAjax = page.locator('#ajaxButton');
     const messageLocator = page.locator('.bg-success');
     await buttonAjax.click();
