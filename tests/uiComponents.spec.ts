@@ -68,3 +68,129 @@ test('checkboxes', async({page}) => {
         await expect(checkbox).toBeChecked();
     }
 });
+test('List and dropdowns', async({page}) => {
+    const selectLocator = page.locator('ngx-header nb-select');
+    await selectLocator.click();
+
+    page.getByRole('list'); // UL TAG
+    page.getByRole('listitem'); // LI TAG
+
+    //const optionList = page.getByRole('list').locator('nb-option');
+    const optionList = page.locator('nb-option-list nb-option');
+    await expect(optionList).toHaveText(['Light','Dark', 'Cosmic', 'Corporate']);
+
+    await optionList.filter({hasText: 'Cosmic'}).click();
+
+    const header = page.locator('nb-layout-header');
+    await expect(header).toHaveCSS('background-color', 'rgb(50, 50, 89)');
+
+    const colors = {
+        "Light": "rgb(255, 255, 255)",
+        "Dark": "rgb(34, 43, 69)",
+        "Cosmic": "rgb(50, 50, 89)",
+        "Corporate": "rgb(255, 255, 255)"
+    };
+
+    for(const color in colors) {
+        await selectLocator.click();
+        await optionList.filter({hasText: color}).click();
+        await expect(header).toHaveCSS('background-color', colors[color]);
+    }
+});
+test('tooltips', async({page}) => {
+    await page.getByText('Modal & Overlays').click();
+    await page.getByText('Tooltip').click();
+
+    const toolTipCard = page.locator('nb-card', {hasText: 'Tooltip Placements'});
+    await toolTipCard.getByRole('button', {name: 'TOP'}).hover();
+
+    const tooltip = page.locator('nb-tooltip');
+    await expect(tooltip).toHaveText('This is a tooltip');
+});
+test('dialog box tests', async({page}) => {
+    test.slow();
+    await page.getByText('Tables & Data').click();
+    await page.getByText('Smart Table').click();
+
+    await page.getByRole('table')
+        .locator('tr', {hasText: 'mdo@gmail.com'})
+        .locator('.nb-trash')
+        .click();
+
+    page.on('dialog', dialog => {
+        expect(dialog.message()).toEqual('Are you sure you want to delete?');
+        dialog.accept();
+    });
+    
+    await expect(page.locator('tbody tr').first()).not.toHaveText('1MarkOtto@mdomdo@gmail.com28');
+});
+test('web tables', async({page}) => {
+    await page.getByText('Tables & Data').click();
+    await page.getByText('Smart Table').click();
+
+    //get the row by any test in this row
+    const targetRow = page.getByRole('row', {name: 'twitter@outlook.com'});
+    await targetRow.locator('.nb-edit').click();
+
+    const emailInput = page.locator('input-editor').getByPlaceholder('E-mail');
+    const ageInput = page.locator('input-editor').getByPlaceholder('Age');
+
+    await emailInput.clear();
+    await emailInput.fill('krif07@gmail.com');
+    await ageInput.clear();
+    await ageInput.fill('40');
+
+    await page.locator('.nb-checkmark').click();
+    const newTargetRow = page.getByRole('row', {name: 'krif07@gmail.com'});
+
+    await expect(newTargetRow).toHaveText('3LarryBird@twitterkrif07@gmail.com40');
+    await expect(newTargetRow).toContainText('krif07@gmail.com');
+});
+test('web tables 2', async({page}) => {
+    // get the row based on the value in the specific column
+    await page.getByText('Tables & Data').click();
+    await page.getByText('Smart Table').click();
+
+    await page.locator('.ng2-smart-page-link').getByText('2').click();
+    const targetRowById = page.getByRole('row', {name: '11'})
+        .filter({has: page.locator('td').nth(1).getByText('11')});
+    await targetRowById.locator('.nb-edit').click();
+
+    const emailInput = page.locator('input-editor').getByPlaceholder('E-mail');
+    await emailInput.clear();
+    await emailInput.fill('krif07@gmail.com');
+    await page.locator('.nb-checkmark').click();
+    
+    await expect(targetRowById).toContainText('krif07@gmail.com');
+    await expect(targetRowById.locator('td').nth(5)).toHaveText('krif07@gmail.com')
+});
+
+test('web tables 3', async({page}) => {
+    // filter the table
+    await page.getByText('Tables & Data').click();
+    await page.getByText('Smart Table').click();
+
+    const ages = ['20', '30', '40', '200'];
+    const searchInputAge = page.locator('input-filter').getByPlaceholder('Age');
+    const ageRows = page.locator('tbody tr');
+
+    for(const age of ages) {
+        await searchInputAge.clear();
+        await searchInputAge.fill(age);
+
+        await page.locator(`input-filter[ng-reflect-query="${age}"]`).waitFor();
+
+        for(const row of await ageRows.all()) {
+            const cell = row.locator('td').last();
+            const cellValue = await cell.textContent();
+
+            if(age != '200') {
+                expect(cellValue).toEqual(age);
+            } else {
+                await expect(cellValue).toContain('No data found');
+            }
+        }
+
+    }
+
+});
