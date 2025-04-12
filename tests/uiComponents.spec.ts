@@ -235,5 +235,36 @@ test('datepicker 2', async({page}) => {
     calendarInput.click();
 
     await expect(datepicker).toHaveValue(dateToAssert);
+});
 
+test('sliders 1', async({page}) => {
+    //update the attribute
+    await page.getByText('IoT Dashboard').click();
+
+    const sliderTemp = page.locator('[tabtitle="Temperature"] circle');
+    await sliderTemp.evaluate(node => {
+        node.setAttribute('cx', '232.60');
+        node.setAttribute('cy', '232.60');
+    });
+    await sliderTemp.click();
+});
+test('sliders 2', async({page}) => {
+    //Mouse movement
+    await page.getByText('IoT Dashboard').click();
+
+    const tempBox = page.locator('[tabtitle="Temperature"] ngx-temperature-dragger');
+    await tempBox.scrollIntoViewIfNeeded();
+
+    //create coordinates x,y (0, 0)
+    const box = await tempBox.boundingBox();
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2; 
+
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 100, y);
+    await page.mouse.move(x + 100, y + 100);
+    await page.mouse.up();
+
+    await expect(tempBox).toContainText('30');
 });
