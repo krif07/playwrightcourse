@@ -192,5 +192,48 @@ test('web tables 3', async({page}) => {
         }
 
     }
+});
+
+test('date pickers', async({page}) => {
+    await page.getByText('Forms').click();
+    await page.getByText('Datepicker').click();
+
+    const datepicker = page.getByPlaceholder('Form Picker')
+    await datepicker.click();
+
+    const day = "1";
+    const dayToPick = page.locator('[class="day-cell ng-star-inserted"]').getByText(day, {exact: true});
+    await dayToPick.click();
+    await expect(datepicker).toHaveValue('Apr 1, 2025');
+});
+
+test('datepicker 2', async({page}) => {
+    await page.getByText('Forms').click();
+    await page.getByText('Datepicker').click();
+
+    const datepicker = page.getByPlaceholder('Form Picker')
+    await datepicker.click();
+
+    let date = new Date();
+    date.setDate(date.getDate() + 555);
+    const expectedDate = date.getDate().toString();
+    const expectedMonthShort = date.toLocaleDateString('En-US', {month: 'short'});
+    const expectedMonthLong = date.toLocaleDateString('En-US', {month: 'long'});
+    const expectedYear = date.getFullYear();
+    const dateToAssert = `${expectedMonthShort} ${expectedDate}, ${expectedYear}`;
+
+    let calendarMonthYear = await page.locator('nb-calendar-view-mode').textContent();
+    const expectedMonthYear = `${expectedMonthLong} ${expectedYear} `;
+
+    const rightNav = page.locator('nb-calendar-pageable-navigation [data-name="chevron-right"]');
+    while(!calendarMonthYear?.includes(expectedMonthYear)) {
+        await rightNav.click();
+        calendarMonthYear = await page.locator('nb-calendar-view-mode').textContent();
+    }
+
+    const calendarInput = page.locator('[class="day-cell ng-star-inserted"]').getByText(expectedDate, {exact: true});
+    calendarInput.click();
+
+    await expect(datepicker).toHaveValue(dateToAssert);
 
 });
