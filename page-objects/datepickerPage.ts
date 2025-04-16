@@ -1,13 +1,13 @@
 import {expect, Locator, Page} from "@playwright/test";
+import { HelperBase } from "./HelperBase";
 
-export class DatepickerPage {
-    private readonly page: Page;
+export class DatepickerPage extends HelperBase {
     private calendarMonthYearLocator: Locator;
     private rightArrowNavigatorLocator: Locator;
     private calendarDayCell: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.calendarMonthYearLocator = page.locator('nb-calendar-view-mode');
         this.rightArrowNavigatorLocator = page.locator('nb-calendar-pageable-navigation [data-name="chevron-right"]');
         this.calendarDayCell = page.locator('.day-cell.ng-star-inserted');

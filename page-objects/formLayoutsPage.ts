@@ -1,15 +1,15 @@
 import {Locator, Page} from "@playwright/test";
+import { HelperBase } from "./HelperBase";
 
-export class FormLayoutsPage {
+export class FormLayoutsPage extends HelperBase {
 
-    private readonly page: Page;
     private readonly basicForm: Locator;
     private readonly emailField: Locator;
     private readonly passwordField: Locator;
     private readonly signInButton: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.basicForm = page.locator('nb-card').filter({hasText: "Using the Grid"});
         this.emailField = this.basicForm.getByRole('textbox', {name: "Email"});
         this.passwordField = this.basicForm.getByRole('textbox', {name: "Password"});
