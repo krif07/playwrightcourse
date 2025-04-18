@@ -3,7 +3,8 @@ import {test, expect} from '@playwright/test';
 test.beforeEach(async ({page}, testInfo) => {
     // increse the time out for every test in this file in 2 seconds
     testInfo.setTimeout(testInfo.timeout + 2000);
-    await page.goto('http://www.uitestingplayground.com/ajax');
+    const url = process.env.URL+"";
+    await page.goto(url);
 });
 
 test('auto waiting', async({page}) => {

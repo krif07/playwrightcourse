@@ -3,7 +3,7 @@ import {PageManager} from '../page-objects/pageManager';
 import {faker} from '@faker-js/faker';
 
 test.beforeEach(async({page}) => {
-    await page.goto('http://localhost:4200/');
+    await page.goto('/');
 });
 
 test('Navigate to forms page', async({page}) => {
@@ -27,7 +27,7 @@ test('submit using grid Form with credentials And Select Option', async({page}, 
     const email = `${randomFullName.replace(' ', '')}${faker.number.int(100)}@gmail.com`;
     
     await pageManager.navigateTo().formLayoutsPage();
-    await formLayoutsPage.submitUsingGridFormWithCredentialsAndSelectOption(email, 'mipassword', "Option 2");
+    await formLayoutsPage.submitUsingGridFormWithCredentialsAndSelectOption(email, process.env.PASSWORD+"", "Option 2");
     page.screenshot({path: 'screenshots/formLayoutsPage.png'});
     page.locator('nb-card').filter({hasText: "Using the Grid"}).screenshot({path: 'screenshots/form.png'});
     await page.waitForTimeout(3000)
