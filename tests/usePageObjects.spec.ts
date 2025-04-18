@@ -28,8 +28,10 @@ test('submit using grid Form with credentials And Select Option', async({page}, 
     
     await pageManager.navigateTo().formLayoutsPage();
     await formLayoutsPage.submitUsingGridFormWithCredentialsAndSelectOption(email, 'mipassword', "Option 2");
+    page.screenshot({path: 'screenshots/formLayoutsPage.png'});
+    page.locator('nb-card').filter({hasText: "Using the Grid"}).screenshot({path: 'screenshots/form.png'});
     await page.waitForTimeout(3000)
-    expect(true).toBe(false);
+    //expect(true).toBe(false);
 });
 
 test('select day from From datepikcer', async({page}) => {

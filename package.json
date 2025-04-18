@@ -6,7 +6,8 @@
     "po-chrome": "npx playwright test usePageObjects.spec.ts --project=chromium --headed",
     "po-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox --headed",
     "po-all": "npm run ui-api-chrome && npm run ui-api-firefox",
-    "po-all-parallel": "npm run ui-api-chrome & npm run ui-api-firefox"
+    "po-all-parallel": "npm run ui-api-chrome & npm run ui-api-firefox",
+    "show-report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "Cristian Fernando Dávila López",
