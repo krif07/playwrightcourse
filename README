@@ -7,3 +7,5 @@ npx playwright test -g "mercadolibre" --project=chromium --headed
 npx playwright test --ui
 npx playwright test --project=chromium --trace on
 npx playwright test --project=chromium --debug
+
+npx playwright test --config=playwright-prod.config.ts

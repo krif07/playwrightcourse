@@ -7,6 +7,7 @@
     "po-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox --headed",
     "po-all": "npm run ui-api-chrome && npm run ui-api-firefox",
     "po-all-parallel": "npm run ui-api-chrome & npm run ui-api-firefox",
+    "autoWait-dev": "URL=http://www.uitestingplayground.com/ajax npx playwright test autoWaiting.spec.ts --project=chromium --headed",
     "show-report": "npx playwright show-report"
   },
   "keywords": [],
