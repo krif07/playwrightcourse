@@ -2,12 +2,18 @@
   "name": "playwrightcourse",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "po-chrome": "npx playwright test usePageObjects.spec.ts --project=chromium --headed",
+    "po-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox --headed",
+    "po-all": "npm run ui-api-chrome && npm run ui-api-firefox",
+    "po-all-parallel": "npm run ui-api-chrome & npm run ui-api-firefox"
+  },
   "keywords": [],
   "author": "Cristian Fernando Dávila López",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.13.14"
   },

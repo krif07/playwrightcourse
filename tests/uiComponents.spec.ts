@@ -1,5 +1,8 @@
 import {test, expect} from '@playwright/test';
 
+// This file will be run fully parallel
+test.describe.configure({mode: 'parallel'});
+
 test.beforeEach(async({page}) => {
     await page.goto('http://localhost:4200/');
 });

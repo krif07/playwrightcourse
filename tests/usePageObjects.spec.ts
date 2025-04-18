@@ -1,11 +1,10 @@
 import {test, expect} from '@playwright/test';
 import {PageManager} from '../page-objects/pageManager';
-
+import {faker} from '@faker-js/faker';
 
 test.beforeEach(async({page}) => {
     await page.goto('http://localhost:4200/');
 });
-
 
 test('Navigate to forms page', async({page}) => {
     const pageManager = new PageManager(page);
@@ -17,12 +16,20 @@ test('Navigate to forms page', async({page}) => {
     await pageManager.navigateTo().tooltipPage();
 });
 
-test('submit using grid Form with credentials And Select Option', async({page}) => {
+test('submit using grid Form with credentials And Select Option', async({page}, testInfo) => {
+    if(testInfo.retry) {
+        //do something
+        console.log(testInfo)
+    }
     const pageManager = new PageManager(page);
     const formLayoutsPage = pageManager.onFormLayoutPage();
+    const randomFullName = faker.person.fullName();
+    const email = `${randomFullName.replace(' ', '')}${faker.number.int(100)}@gmail.com`;
     
     await pageManager.navigateTo().formLayoutsPage();
-    await formLayoutsPage.submitUsingGridFormWithCredentialsAndSelectOption('myemail@mail.com', 'mipassword', "Option 2");
+    await formLayoutsPage.submitUsingGridFormWithCredentialsAndSelectOption(email, 'mipassword', "Option 2");
+    await page.waitForTimeout(3000)
+    expect(true).toBe(false);
 });
 
 test('select day from From datepikcer', async({page}) => {
