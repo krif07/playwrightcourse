@@ -12,6 +12,9 @@ npx playwright test --config=playwright-prod.config.ts
 
 npx playwright test --project=chromium --grep @smoke
 
+# Visual testing
+npx playwright test --update-snapshots
+
 #Allure reporter
 #npm i -D @playwright/test allure-playwright
 
