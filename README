@@ -11,3 +11,9 @@ npx playwright test --project=chromium --debug
 npx playwright test --config=playwright-prod.config.ts
 
 npx playwright test --project=chromium --grep @smoke
+
+#Allure reporter
+#npm i -D @playwright/test allure-playwright
+
+#Generate allure report
+#allure generate allure-results -o allure-report --clean && allure open 
