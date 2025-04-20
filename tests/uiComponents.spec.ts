@@ -7,7 +7,7 @@ test.beforeEach(async({page}) => {
     await page.goto('/');
 });
 
-test.describe('Form Layouts page', ()=>{
+test.describe('Form Layouts page @regression', ()=>{
     test.beforeEach(async({page}) => {
         await page.getByText('Forms').click();
         await page.getByText('Form Layouts').click();

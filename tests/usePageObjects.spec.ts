@@ -6,7 +6,7 @@ test.beforeEach(async({page}) => {
     await page.goto('/');
 });
 
-test('Navigate to forms page', async({page}) => {
+test('Navigate to forms page @smoke', async({page}) => {
     const pageManager = new PageManager(page);
     await pageManager.navigateTo().formLayoutsPage();
     await pageManager.navigateTo().datepickerPage();
@@ -34,7 +34,7 @@ test('submit using grid Form with credentials And Select Option', async({page}, 
     //expect(true).toBe(false);
 });
 
-test('select day from From datepikcer', async({page}) => {
+test('select day from From datepikcer @smoke @regression', async({page}) => {
     const pageManager = new PageManager(page);
     const datepickerPage = pageManager.onDatepickerPage();
     await pageManager.navigateTo().datepickerPage();

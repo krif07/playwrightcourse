@@ -9,3 +9,5 @@ npx playwright test --project=chromium --trace on
 npx playwright test --project=chromium --debug
 
 npx playwright test --config=playwright-prod.config.ts
+
+npx playwright test --project=chromium --grep @smoke
