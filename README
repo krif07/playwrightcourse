@@ -20,3 +20,10 @@ npx playwright test --update-snapshots
 
 #Generate allure report
 #allure generate allure-results -o allure-report --clean && allure open 
+
+#Docker
+docker build -t pw-pageubject-test .
+docker images
+docker run -it pw-pageubject-test
+
+docker-compose up --build
