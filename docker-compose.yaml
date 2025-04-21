@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: npm run po-chrome
+    command: npm run dd-test
     volumes:
       - ./playwright-report/:/app/playwright-report
       - ./test-results/:/app/test-results

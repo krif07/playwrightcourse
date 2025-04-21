@@ -7,6 +7,7 @@
     "po-firefox": "npx playwright test usePageObjects.spec.ts --project=firefox --headed",
     "po-all": "npm run ui-api-chrome && npm run ui-api-firefox",
     "po-all-parallel": "npm run ui-api-chrome & npm run ui-api-firefox",
+    "dd-test": "npx playwright test dragAndDropWithFrames.spec.ts --project=chromium",
     "autoWait-dev": "URL=http://www.uitestingplayground.com/ajax npx playwright test autoWaiting.spec.ts --project=chromium --headed",
     "test-tag": "npx playwright test --project=chromium --grep @smoke",
     "test-tags": "npx playwright test --project=chromium --grep '@smoke|@regression'",

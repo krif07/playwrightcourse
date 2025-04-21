@@ -42,7 +42,7 @@ export default defineConfig<TestOptions>({
     globalsQaURL: 'https://www.globalsqa.com/demo-site/draganddrop/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    headless: false,
+    headless: true,
     trace: 'on-first-retry',
     //actionTimeout: 320000,
     //navigationTimeout: 320000,
